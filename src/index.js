@@ -1,10 +1,42 @@
-class Person {
-  constructor(name) {
-    this.name = name;
+//状态(红灯，绿灯，黄灯)
+class State {
+  constructor(color) {
+    this.color = color;
   }
-  getName() {
-    return this.name;
+  handle(contest) {
+    console.log(`turn to ${this.color} light`);
+    contest.setState(this);
   }
 }
-let p = new Person("biubiubiu");
-console.log(p.getName());
+
+//主体
+class Context {
+  constructor() {
+    this.state = null;
+  }
+  //获取状态
+  getState() {
+    return this.state;
+  }
+  setState(state) {
+    this.state = state;
+  }
+}
+
+//test 
+let context = new Context();
+
+let green = new State('green');
+let yellow = new State('yellow');
+let red = new State('red');
+
+//绿灯亮了
+green.handle(context);
+console.log(context.getState()) //打印状态
+//黄灯亮了
+yellow.handle(context)
+console.log(context.getState()) //打印状态
+
+//红灯亮了
+red.handle(context)
+console.log(context.getState()) //打印状态
